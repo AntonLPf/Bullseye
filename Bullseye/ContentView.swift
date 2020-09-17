@@ -9,13 +9,31 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+//    MARK: Properties
+//    ================
+    
+//    User interface views
     @State var alertIsVisible: Bool = false
     
+//    User interface content and layout
     var body: some View {
         VStack {
-            Text("Welcome to my first app!")
-                .fontWeight(.black)
-                .foregroundColor(.green)
+            
+//            Target row
+            HStack {
+                Text("Put the bullseye as close as you can to:")
+                Text("100")
+            }
+            
+//            Slider row
+            HStack{
+                Text("1")
+                Slider(value: .constant(10))
+                Text("100")
+            }
+            
+//            Button row
             Button(action: {
                 print("Button pressed!")
                 self.alertIsVisible = true
@@ -25,10 +43,29 @@ struct ContentView: View {
             .alert(isPresented: self.$alertIsVisible) {
                 Alert(title: Text("Hello there!"), message: Text("This is my first pop-up"), dismissButton: .default(Text("Awesome")))
             }
+            
+//            Score row
+            HStack {
+                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
+                    Text("Start over")
+                }
+                Text("Score")
+                Text("999999")
+                Text("Round:")
+                Text("999")
+                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
+                    Text("Info")
+                }
+            }
         }
     }
+    
+//    MARK: Methods
+//    =============
 }
 
+//MARK: Preview
+//=============
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
