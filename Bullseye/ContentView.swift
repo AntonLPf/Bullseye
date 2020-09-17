@@ -16,6 +16,7 @@ struct ContentView: View {
 //    User interface views
     @State var alertIsVisible: Bool = false
     @State var sliderValue: Double = 50.0
+    @State var target: Int = Int.random(in: 1...100)
     
 //    User interface content and layout
     var body: some View {
@@ -24,7 +25,7 @@ struct ContentView: View {
 //            Target row
             HStack {
                 Text("Put the bullseye as close as you can to:")
-                Text("100")
+                Text("\(self.target)")
             }
             
             Spacer()
@@ -38,7 +39,7 @@ struct ContentView: View {
             
 //            Button row
             Button(action: {
-                print("Button pressed!")
+                print("Points awarded \(self.pointsForCurrentRound())")
                 self.alertIsVisible = true
             }) {
                 Text("Hit me!")
@@ -71,6 +72,19 @@ struct ContentView: View {
     
 //    MARK: Methods
 //    =============
+    
+    func pointsForCurrentRound() -> Int {
+        var difference: Int
+        if Int(self.sliderValue.rounded()) > self.target {
+            difference = Int(self.sliderValue.rounded()) - self.target
+        } else if self.target > Int(self.sliderValue.rounded()) {
+            difference = self.target - Int(self.sliderValue.rounded())
+        } else {
+            difference = 0
+        }
+        return 100 - difference
+    }
+    
 }
 
 //MARK: Preview
