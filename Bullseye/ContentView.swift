@@ -77,14 +77,7 @@ struct ContentView: View {
 //    =============
     
     func pointsForCurrentRound() -> Int {
-        let difference: Int
-        if Int(self.sliderValue.rounded()) > self.target {
-            difference = sliderValueRounded - self.target
-        } else if self.target > sliderValueRounded {
-            difference = self.target - sliderValueRounded
-        } else {
-            difference = 0
-        }
+        let difference = abs(self.sliderValueRounded - self.target)
         return 100 - difference
     }
     
