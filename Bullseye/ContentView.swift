@@ -21,6 +21,7 @@ struct ContentView: View {
         Int(self.sliderValue.rounded())
     }
     @State var score = 0
+    @State var round = 1
     
 //    User interface content and layout
     var body: some View {
@@ -43,15 +44,17 @@ struct ContentView: View {
             
 //            Button row
             Button(action: {
-                print("Points awarded \(self.pointsForCurrentRound())")
                 self.alertIsVisible = true
-                self.score = self.score + self.pointsForCurrentRound()
-                self.target = Int.random(in: 1...100)
             }) {
                 Text("Hit me!")
             }
             .alert(isPresented: self.$alertIsVisible) {
-                Alert(title: Text("Hello there!"), message: Text(self.scoringMessage()), dismissButton: .default(Text("Awesome")))
+                Alert(title: Text("Hello there!"), message: Text(self.scoringMessage()), dismissButton: .default(Text("Awesome")) {
+                    self.score += self.pointsForCurrentRound()
+                    self.target = Int.random(in: 1...100)
+                    self.round += 1
+                }
+                )
             }
             
             Spacer()
@@ -66,7 +69,7 @@ struct ContentView: View {
                 Text("\(self.score)")
                 Spacer()
                 Text("Round:")
-                Text("999")
+                Text("\(self.round)")
                 Spacer()
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
                     Text("Info")
