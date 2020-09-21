@@ -20,6 +20,7 @@ struct ContentView: View {
     var sliderValueRounded: Int {
         Int(self.sliderValue.rounded())
     }
+    @State var score = 0
     
 //    User interface content and layout
     var body: some View {
@@ -44,6 +45,8 @@ struct ContentView: View {
             Button(action: {
                 print("Points awarded \(self.pointsForCurrentRound())")
                 self.alertIsVisible = true
+                self.score = self.score + self.pointsForCurrentRound()
+                self.target = Int.random(in: 1...100)
             }) {
                 Text("Hit me!")
             }
@@ -60,7 +63,7 @@ struct ContentView: View {
                 }
                 Spacer()
                 Text("Score")
-                Text("999999")
+                Text("\(self.score)")
                 Spacer()
                 Text("Round:")
                 Text("999")
@@ -77,8 +80,9 @@ struct ContentView: View {
 //    =============
     
     func pointsForCurrentRound() -> Int {
+        let maximumScore = 100
         let difference = abs(self.sliderValueRounded - self.target)
-        return 100 - difference
+        return maximumScore - difference
     }
     
     func scoringMessage() -> String {
